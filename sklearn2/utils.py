@@ -122,8 +122,8 @@ def print_decision_path(estimator, X_df):
                 continue
             feature_i = estimator.tree_.feature[node_id]
             thresh = threshold[node_id]
-            sign = "<=" if X[sample_id, feature_i] <= else ">"
-            print("decision id node %d : %s = %s %s %s" 
+            sign = "<=" if X[sample_id, feature_i] <= thhresh else ">"
+            print("decision id node %d : %s = %s %s %s"
                   % (node_id, feature_names[feature_i],
                      X[sample_id, feature_i], sign, thresh))
 
@@ -154,17 +154,94 @@ def forest_sort(x, y):
 def ratio2int(p, k):
     """
     Returns p * k if k < 1 else k
-    
+
     Result is cast to nearest integer in [1, p]
-    
+
     Parameters:
     -----------
-    
+
     p : int
-    
+
     k : int or float
     """
     return min(max(int(round(p * k if k < 1 else k)), 1), p)
 
 
-    
+class EstimatorWrap:
+    """ Wrapper for estimators that do not accept dataframes """
+
+    def __init__(self, estimator):
+        self.estimator = estimator
+
+    def fit(self, X, y):
+        r = self.estimator.fit(X.as_matrix(), y.as_matric())
+        self.classes_ = self.estimator.classes_
+        return r
+
+    def score(self, X, y):
+        r = self.estimator.score(X.as_matrix(), y.as_matric())
+        return r
+
+    def predict(self, X):
+        return self.estimator.predict(X.as_matrix())
+
+    def predict_proba(self, X):
+        return self.estimator.predict_proba(X.as_matrix())
+
+
+class TransformerWrap(BaseEstimator, TransformerMixin):
+    """ Wrapper for transformers that downcast dataframes """
+
+    def __init__(self, transformer):
+        self.transformer = transformer
+
+    def fit(self, X, y):
+        self.cols = X.columns if isinstance(X, pd.DataFrame) else None
+        self.transformer.fit(X, y)
+        return self
+
+    def transform(self, X):
+        return todf(self.transformer.transform(X), self.cols)
+
+    def fit_transform(self, X):
+        self.cols = X.columns if isinstance(X, pd.DataFrame) else None
+        return todf(self.transformer.fit_transform(X), self.cols)
+
+
+class SelectorWrap(BaseEstimator, TransformerMixin):
+
+    def __init__(self, selector):
+        self.selector = selector
+
+    def fit(self, X, y):
+        self.selector.fit(X, y)
+        self.support = self.selector.get_support()
+        return self
+
+    def transform(self, X):
+        Xaccess = X.iloc if isinstance(X, pd.DataFrame) else X
+        return Xaccess[:, self.support]
+
+
+class DenseTransformer(BaseEstimator, TransformerMixin):
+
+    def __init__(self):
+        pass
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        return X.toarray() if issparse(X) else X
+
+
+class PassThrought(BaseEstimator, TransformerMixin):
+
+    def __init__(self):
+        pass
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        return X
