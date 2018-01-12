@@ -15,36 +15,6 @@ from scipy.sparse import issparse
 
 pd.options.display.width = 160
 
-HEADER = '                        column |    nulls |   unique | type           | most common'
-FORMAT = '%30s | %6d   | %6d   | %14s | %s'
-
-#HEADER = '                                              column |    nulls |   unique | type           | most common'
-#FORMAT = '%52s | %6d   | %6d   | %14s | %s'
-
-def print_summary(df):
-    """ print a nice summary of a pd.DataFrame """
-
-    assert(isinstance(df, pd.DataFrame))
-
-    print('%d lines - %d columns' % (len(df), df.shape[1]))
-    print(HEADER)
-    print('-------------------------------------------------------------------------------------------')
-    for col in df.columns:
-        nuni = -999
-        mode = -999
-        try:
-            nuni = df[col].nunique()
-            mode = df[col].value_counts().head(1).to_dict()
-        except:
-            pass
-        print(FORMAT % (
-            col,
-            df[col].isnull().sum(),
-            nuni,
-            df[col].dtype,
-            mode
-        ))
-
                
 def numeric_cols(df):
     types = ['float64', 'int64', 'float32', 'int32']
@@ -69,6 +39,40 @@ def date_cols(df):
 def not_date_cols(df):
     types = ['datetime64[ns]']
     return [c for c in df.columns if df[c].dtype not in types]
+
+
+def print_summary(df):
+    """ print a nice summary of a pd.DataFrame """
+
+    assert(isinstance(df, pd.DataFrame))
+
+    HEADER = '                        column |    nulls |   unique | type           | mode/med'
+    FORMAT = '%30s | %6d   | %6d   | %14s | %s'
+    #HEADER = '                                              column |    nulls |   unique | type           | most common'
+    #FORMAT = '%52s | %6d   | %6d   | %14s | %s'
+
+    print('%d lines - %d columns' % (len(df), df.shape[1]))
+    print(HEADER)
+    print('-'*80)
+    for col in df.columns:
+        nuni = -999
+        mode = -999
+        try:
+            nuni = df[col].nunique()
+            if df[col].dtype in ['float32', 'float64']:
+                mode = df[col].median()
+            else:
+                z = df[col].value_counts()[:1]
+                mode = '{} ({})'.format(z.index[0], z.iloc[0])
+        except:
+            pass
+        print(FORMAT % (
+            col,
+            df[col].isnull().sum(),
+            nuni,
+            df[col].dtype,
+            mode
+        ))
 
 
 def model_name(m):
@@ -299,11 +303,7 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
     
-    
     from sklearn2.datasets import get_titanic
-
-    x, y = get_titanic()
-    
-    x = DummyEncoder().fit_transform(x)
-    
-    z = TransformerWrap(MinMaxScaler()).fit_transform(x)
+    tmp = get_titanic(False, False)
+    print_summary(tmp)
+#    del(tmp)

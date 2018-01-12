@@ -10,7 +10,7 @@ import numpy as np
 import itertools
 
 
-from sklearn2.utils import numeric_cols
+from sklearn2.utils import numeric_cols, object_cols
 
                
 def show_histo(df, bins=20):
@@ -22,6 +22,18 @@ def show_histo(df, bins=20):
         df[c].hist(bins=bins)
         plt.title(c)
         plt.show()
+        
+
+def show_freq(df, max_card=20):
+    """ plot histograms of columns """
+
+    assert(isinstance(df, pd.DataFrame))
+
+    for c in object_cols(df):
+        if df[c].nunique() < max_card:
+            df[c].value_counts().plot(kind='barh')
+            plt.title(c)
+            plt.show()
 
 
 def show_heatmap(data, columns=None, index=None, ax=None):
