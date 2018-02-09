@@ -10,8 +10,8 @@ import pandas as pd
 from sklearn.dummy import DummyClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
-from sklearn2.utils import clean_column, split_xy, print_summary
-from sklearn2.feature_extraction import DateEncoder, DummyEncoder
+from sklearn2.utils import print_summary
+from sklearn2.feature_extraction import DateEncoder, SparseCatEncoder
 from sklearn2.datasets import get_titanic
 
 
@@ -34,7 +34,7 @@ def test_dummy_encoder():
     def _test_dummy(x):
         xtr, xte = x[:2], x[2:]
     
-        enc = DummyEncoder(drop_first=True)
+        enc = SparseCatEncoder(drop_first=True)
         enc.fit(xtr)
         xtr_e = enc.transform(xtr)
         xtr_e2 = enc.fit_transform(xtr)
@@ -54,7 +54,7 @@ x, y = get_titanic()
 
 model = Pipeline([
                   ("da", DateEncoder()), 
-                  ("du", DummyEncoder()), 
+                  ("du", SparseCatEncoder()), 
                   ("lr", DummyClassifier())
                   ])
 params = { 

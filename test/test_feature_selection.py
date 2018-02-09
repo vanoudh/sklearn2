@@ -11,7 +11,7 @@ from sklearn.dummy import DummyClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 
-from sklearn2.feature_extraction import DateEncoder, DummyEncoder
+from sklearn2.feature_extraction import DateEncoder, SparseCatEncoder
 from sklearn2.feature_selection import RfAutoSelector
 from sklearn2.datasets import get_titanic
 
@@ -24,7 +24,7 @@ pd.options.display.width = 160
 x, y = get_titanic()
 model = Pipeline([
                   ("da", DateEncoder()), 
-                  ("du", DummyEncoder()), 
+                  ("du", SparseCatEncoder()), 
                   ("rf", RfAutoSelector()), 
                   ("lr", DummyClassifier())
                   ])
