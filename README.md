@@ -6,16 +6,12 @@ It is in development phase : it will change radically, often and without notice.
 
 ## Requirements
 
-Anaconda for SGCIB : https://sgithub.fr.world.socgen/pages/CenterOfCompetency/python-configuration/
+Anaconda Python
 
 ## Installation
 
     >pip install sklearn2
-    
-# Upload a new version
-
-    >python setup.py bdist_wheel upload -r pypi-local-gbis-cdo
-    
+        
 ## Usage
 
 TODO
