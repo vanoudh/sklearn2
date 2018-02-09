@@ -16,6 +16,10 @@ from scipy.sparse import issparse
 pd.options.display.width = 160
 
                
+def todf(X, cols=None):
+    return X if isinstance(X, pd.DataFrame) else pd.DataFrame(X, columns=cols)
+
+
 def numeric_cols(df):
     types = ['float64', 'int64', 'float32', 'int32']
     return [c for c in df.columns if df[c].dtype in types]
@@ -41,19 +45,22 @@ def not_date_cols(df):
     return [c for c in df.columns if df[c].dtype not in types]
 
 
-def print_summary(df):
+def print_summary(df, width1=40, width2=80):
     """ print a nice summary of a pd.DataFrame """
 
-    assert(isinstance(df, pd.DataFrame))
+    df = todf(df)
 
-    HEADER = '                        column |    nulls |   unique | type           | mode/med'
-    FORMAT = '%30s | %6d   | %6d   | %14s | %s'
+    lc = max([len(str(c)) for c in df.columns])
+    width1 = min(width1, lc)
+    
+    HEADER = ' '*(width1-6) + 'column |    nulls |   unique | type           | mode/med'
+    FORMAT = '%' + str(width1) + 's | %6d   | %6d   | %14s | %s'
+#    FORMAT = '%s | %6d   | %6d   | %14s | %s'
     #HEADER = '                                              column |    nulls |   unique | type           | most common'
     #FORMAT = '%52s | %6d   | %6d   | %14s | %s'
-
     print('%d lines - %d columns' % (len(df), df.shape[1]))
     print(HEADER)
-    print('-'*80)
+    print('-'*width2)
     for col in df.columns:
         nuni = -999
         mode = -999
@@ -66,15 +73,21 @@ def print_summary(df):
                 mode = '{} ({})'.format(z.index[0], z.iloc[0])
         except:
             pass
-        print(FORMAT % (
-            col,
-            df[col].isnull().sum(),
-            nuni,
-            df[col].dtype,
-            mode
-        ))
+        s = FORMAT % (str(col)[:width1], df[col].isnull().sum(),
+                      nuni, df[col].dtype, mode)
+        print(s[:width2])
 
 
+def print_summary2(df):
+    pres = pd.DataFrame()
+    pres['nulls'] = df.isnull().sum()
+    pres['unique'] = df.nunique()
+    pres['type'] = df.dtypes
+    pres['mode'] = df.mode(axis=0).iloc[0]
+    pres['median'] = df.median()
+    print(pres)
+
+    
 def model_name(m):
     return str(m).split('(')[0].split('.')[-1].split(' ')[0]
 
@@ -155,8 +168,6 @@ def print_decision_path(estimator, X_df):
                      X[sample_id, feature_i], sign, thresh))
 
             
-def todf(X, cols=None):
-    return X if isinstance(X, pd.DataFrame) else pd.DataFrame(X, columns=cols)
 
 
 def get_forest(y):
@@ -242,15 +253,15 @@ class TransformerWrap(BaseEstimator, TransformerMixin):
     def __init__(self, transformer):
         self.transformer = transformer
                 
-    def fit(self, X, y):
+    def fit(self, X, y=None, **fit_params):
         self.cols = X.columns if isinstance(X, pd.DataFrame) else None
         self.transformer.fit(X, y)
         return self
         
-    def transform(self, X):    
+    def transform(self, X, y=None, **fit_params):
         return todf(self.transformer.transform(X), self.cols)
 
-    def fit_transform(self, X):    
+    def fit_transform(self, X, y=None, **fit_params):
         self.cols = X.columns if isinstance(X, pd.DataFrame) else None
         return todf(self.transformer.fit_transform(X), self.cols)
 
@@ -260,12 +271,12 @@ class SelectorWrap(BaseEstimator, TransformerMixin):
     def __init__(self, selector):
         self.selector = selector
                 
-    def fit(self, X, y):        
+    def fit(self, X, y=None, **fit_params):
         self.selector.fit(X, y)
         self.support = self.selector.get_support()
         return self
         
-    def transform(self, X):       
+    def transform(self, X, y=None, **fit_params):
         if isinstance(X, pd.DataFrame):
             return X.iloc[:, self.support] # ok for DataFrame
         else:            
@@ -277,33 +288,56 @@ class DenseTransformer(BaseEstimator, TransformerMixin):
     def __init__(self):
         pass
     
-    def fit(self, X, y=None):
+    def fit(self, X, y=None, **fit_params):
         return self
         
-    def transform(self,X):
+    def transform(self, X, y=None, **fit_params):
         return X.toarray() if issparse(X) else X
 
             
 class PassThrought(BaseEstimator, TransformerMixin):
     """ dummy transformer that doesn't do anything """
     def __init__(self):
-        pass
+        self.feature_names = None
     
-    def fit(self, X, y=None):
+    def fit(self, X, y=None, **fit_params):
         return self
         
-    def transform(self,X):
+    def transform(self, X, y=None, **fit_params):
+        self.feature_names = X.columns
         return X
         
-    def fit_transform(self, X, y=None):
+    def fit_transform(self, X, y=None, **fit_params):
+        self.feature_names = X.columns
         return X
 
-        
+    def get_feature_names(self):
+        return self.feature_names
+   
+     
+#Just wanted to toss out the solution I am using:
+#
+#def check_output(X, ensure_index=None, ensure_columns=None):
+#    """
+#    Joins X with ensure_index's index or ensure_columns's columns when avaialble
+#    """
+#    if ensure_index is not None:
+#        if ensure_columns is not None:
+#            if type(ensure_index) is pd.DataFrame and type(ensure_columns) is pd.DataFrame:
+#                X = pd.DataFrame(X, index=ensure_index.index, columns=ensure_columns.columns)
+#        else:
+#            if type(ensure_index) is pd.DataFrame:
+#                X = pd.DataFrame(X, index=ensure_index.index)
+#    return X
+#I then create wrappers around sklearn's estimators that call this function on the output of transform e.g.,
+#
+#from sklearn.preprocessing import StandardScaler as _StandardScaler 
+#class StandardScaler(_StandardScaler):
+#    def transform(self, X):
+#        Xt = super(StandardScaler, self).transform(X)
+#        return check_output(Xt, ensure_index=X, ensure_columns=X)
+
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-    
-    from sklearn2.datasets import get_titanic
-    tmp = get_titanic(False, False)
-    print_summary(tmp)
-#    del(tmp)

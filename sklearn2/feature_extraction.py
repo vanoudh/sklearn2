@@ -8,7 +8,9 @@ Created on Tue Apr 19 19:09:57 2016
 import logging
 import pandas as pd
 from sklearn.base import TransformerMixin, BaseEstimator
+from sklearn.preprocessing import LabelEncoder
 
+from sklearn2.utils import object_cols, numeric_cols
 from sklearn2.utils import date_cols, align_columns, todf
 
 logger = logging.getLogger(__name__)
@@ -39,7 +41,7 @@ class DateEncoder(TransformerMixin, BaseEstimator):
         return r
 
         
-class DummyEncoder(TransformerMixin, BaseEstimator):
+class SparseCatEncoder(TransformerMixin, BaseEstimator):
     
     def __init__(self, drop_first=False, sparse=False):
         self.drop_first = drop_first
@@ -47,14 +49,19 @@ class DummyEncoder(TransformerMixin, BaseEstimator):
         self.encoded = None
             
     def fit(self, X, y=None):
-        self.encoded = pd.get_dummies(todf(X), 
+        if X.shape[1] == 0:
+            self.encoded = X
+            return self
+        self.encoded = pd.get_dummies(todf(X), dummy_na=True,
                                       drop_first=self.drop_first, 
                                       sparse=self.sparse)            
         logger.debug('dummy encoded shape {}'.format(self.encoded.shape))
         return self
     
     def transform(self, X, y=None):
-        encoded = pd.get_dummies(todf(X), 
+        if X.shape[1] == 0:
+            return X
+        encoded = pd.get_dummies(todf(X), dummy_na=True,
                                  drop_first=False, 
                                  sparse=self.sparse)
         logger.debug('dummy encoded shape {}'.format(encoded.shape))
@@ -64,10 +71,8 @@ class DummyEncoder(TransformerMixin, BaseEstimator):
         self.fit(X, y)
         return self.encoded
 
-from sklearn.preprocessing import LabelEncoder
-from sklearn2.utils import object_cols
 
-class IndexEncoder(TransformerMixin, BaseEstimator):
+class IndexCatEncoder(TransformerMixin, BaseEstimator):
     
     def __init__(self):
         self.encoded = None
@@ -88,4 +93,27 @@ class IndexEncoder(TransformerMixin, BaseEstimator):
         logger.debug('')
         return Xt
 
+    
+class ConstantInputer(TransformerMixin, BaseEstimator):
+    
+    def __init__(self):
+        pass
+            
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X, y=None):
+        return X.fillna(-999)
+
+
+class NumericFilter(TransformerMixin, BaseEstimator):
+    
+    def __init__(self):
+        pass
+            
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X, y=None):
+        return X[numeric_cols(X)]
 

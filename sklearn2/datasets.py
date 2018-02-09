@@ -30,16 +30,16 @@ def get_boston():
     return _extract(load_boston())
 
 
-def get_titanic(split=True, clean=True):  
+def get_titanic(split=True, fillna=True):  
     df = pd.read_csv(path.join(_here, 'titanic.csv'), encoding='latin1')
-    if clean:
-        df.columns = [clean_column(c) for c in df.columns]
-        df.fare = df.fare.astype(float)
-        df.age.fillna(df.age.median(), inplace=True)
-        df.cabin.fillna('-', inplace=True)
-        df.embarked.fillna('-', inplace=True)
-        df = df.drop(['passengerid', 'name'], axis=1)
-    return split_xy(df, 'survived') if split else df 
+#    df.columns = [clean_column(c) for c in df.columns]
+    df.Fare = df.Fare.astype(float)
+    if fillna:
+        df.Age.fillna(df.Age.median(), inplace=True)
+        df.Cabin.fillna('-', inplace=True)
+        df.Embarked.fillna('-', inplace=True)
+    df = df.drop(['PassengerId', 'Name'], axis=1)
+    return split_xy(df, 'Survived') if split else df 
 
 
 def get_house_prices(split=True):  

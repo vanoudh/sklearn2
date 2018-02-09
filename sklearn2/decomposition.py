@@ -19,6 +19,10 @@ class TruncatedSVD2(BaseEstimator, TransformerMixin):
         p = X.shape[1]
         self.k_int = ratio2int(p, self.k)
         self.donothing = (self.k_int <= 0 or self.k_int >= p)
+        if self.donothing:
+            self.feature_names = todf(X).columns
+        else:
+            self.feature_names = ['svd' + str(i) for i in range(self.k_int)]
                      
     def fit(self, X, y=None):
         self._check_params(X)
@@ -39,3 +43,6 @@ class TruncatedSVD2(BaseEstimator, TransformerMixin):
             return X
         self.svd = TruncatedSVD(n_components=self.k_int)
         return todf(self.svd.fit_transform(X))
+    
+    def get_feature_names(self):
+        return self.feature_names
