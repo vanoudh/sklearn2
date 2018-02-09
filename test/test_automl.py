@@ -28,11 +28,24 @@ def getsize(obj):
     return getsizeof(obj) / 1024, asizeof(obj) / 1024
 
 
-for data_func in [get_iris, get_boston]:
-    print('dataset:', str(data_func).split()[1])
-    x, y = data_func()    
-    m = get_best_model(x, y) 
-    print(m.steps[4][1])
+def get_titanic_raw():
+    return get_titanic(True, False)
+
+
+def print_sm(sm):
+    print('Pipeline:')
+    for s in m.best_estimator_.steps:
+        print('  ', s[1])
+
+
+#for data_func in [get_titanic_raw]:
+#    print('dataset:', str(data_func).split()[1])
+#    x, y = data_func()    
+#    m = get_best_model(x, y, None, None, 1) 
+#    print_sm(m)
     
+#df = get_titanic(False, False)
 
-
+#from sklearn.preprocessing import Imputer
+#
+#Imputer().fit_transform(df)

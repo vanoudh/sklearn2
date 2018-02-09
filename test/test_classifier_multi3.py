@@ -39,4 +39,3 @@ for m in [rfc, dtc, logit]:
     print(cross_val_score(m, x, y, scoring = "avg_roc_auc_micro", cv = cv))
     
     
-

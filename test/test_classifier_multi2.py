@@ -46,4 +46,3 @@ for m in [rfc, dtc, logit]:
     print(roc_auc_score(y2_test, y_proba, None))
     
     
-

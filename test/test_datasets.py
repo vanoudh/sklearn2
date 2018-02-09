@@ -18,4 +18,3 @@ print_summary(x)
 
 x, y = get_titanic()
 print_summary(x)
-

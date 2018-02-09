@@ -25,4 +25,3 @@ pd.options.display.width = 160
 df = pd.DataFrame({'a':[1, 2], 'b':['bonjour x','hello y']})
 df['c'] = df.b.apply(lambda s:s.split(' '))
 print_summary(df)
-
