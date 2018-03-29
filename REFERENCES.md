@@ -1,3 +1,17 @@
+https://www.twosigma.com/insights/icml-2017-a-review-of-deep-learning-paperstalks-and-tutorials
+
+https://www.twosigma.com/insights/25-of-our-favorite-papers-talks-presentations-and-workshops-from-nips-2017
+
+https://github.com/kaz-Anova/StackNet
+
+Richard Sutton - RL - an introduction
+
+https://blog.jupyter.org/authoring-custom-jupyter-widgets-2884a462e724
+
+https://arxiv.org/pdf/1802.10567.pdf 
+
+https://engineering.upside.com/a-beginners-guide-to-optimizing-pandas-code-for-speed-c09ef2c6a4d6
+
 https://medium.com/s-c-a-l-e/google-systems-guru-explains-why-containers-are-the-future-of-computing-87922af2cf95
 
 https://tryolabs.com/blog/2017/12/12/deep-learning-for-nlp-advancements-and-trends-in-2017/
