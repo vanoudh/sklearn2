@@ -62,6 +62,8 @@ https://www.quora.com/Why-is-the-paper-%E2%80%9CUnderstanding-Deep-Learning-Requ
 
 https://arxiv.org/pdf/1403.2229.pdf
 
+https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems.pdf
+
 http://rll.berkeley.edu/deeprlcourse/ 
 
 http://icml.cc/2016/tutorials/deep_rl_tutorial.pdf
