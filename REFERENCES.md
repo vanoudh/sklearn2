@@ -1,3 +1,7 @@
+https://medium.com/airbnb-engineering/listing-embeddings-for-similar-listing-recommendations-and-real-time-personalization-in-search-601172f7603e
+
+https://github.com/keon/awesome-nlp
+
 https://www.twosigma.com/insights/icml-2017-a-review-of-deep-learning-paperstalks-and-tutorials
 
 https://www.twosigma.com/insights/25-of-our-favorite-papers-talks-presentations-and-workshops-from-nips-2017
