@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 
 from sklearn2.feature_extraction import DateEncoder, SparseCatEncoder
 from sklearn2.feature_selection import RfAutoSelector
-from sklearn2.datasets import get_titanic
+from sklearn2.datasets import get_titanic_clean
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(message)s')
 logging.getLogger().setLevel(level=logging.DEBUG)
@@ -21,7 +21,7 @@ logging.getLogger().setLevel(level=logging.DEBUG)
 
 pd.options.display.width = 160
 
-x, y = get_titanic()
+x, y = get_titanic_clean(True)
 model = Pipeline([
                   ("da", DateEncoder()), 
                   ("du", SparseCatEncoder()), 

@@ -10,11 +10,11 @@ from sklearn2.datasets import get_iris, get_boston, get_titanic
 from sklearn2.utils import print_summary
 
 
-x, y = get_iris()
+x, y = get_iris(True)
 print_summary(x)
 
 x, y = get_boston()
 print_summary(x)
 
-x, y = get_titanic()
+x, y = get_titanic(True)
 print_summary(x)

@@ -24,7 +24,7 @@ random.seed(0)
 
 pd.options.display.width = 160
 
-x, y = get_iris()
+x, y = get_iris(True)
 
 y2 = pd.get_dummies(y).values
 

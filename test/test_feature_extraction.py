@@ -23,7 +23,7 @@ logging.getLogger().setLevel(level=logging.DEBUG)
 
 
 def test_date_encoder():
-    df = get_titanic(split=False)
+    df = get_titanic()
     df.fillna(0, inplace=True)
     df2 = DateEncoder(ascategory=True).fit_transform(df)
     print_summary(df2)
@@ -50,7 +50,7 @@ def test_dummy_encoder():
     _test_dummy(x.values)
       
 
-x, y = get_titanic()
+x, y = get_titanic(True)
 
 model = Pipeline([
                   ("da", DateEncoder()), 

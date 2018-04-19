@@ -27,7 +27,7 @@ random.seed(0)
 
 pd.options.display.width = 160
 
-x, y = get_iris()
+x, y = get_iris(True)
 y = (y == 'virginica')
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)

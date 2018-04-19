@@ -9,41 +9,41 @@ from os import path
 import pandas as pd
 import numpy as np
 from sklearn.datasets import load_boston, load_iris
-from sklearn2.utils import clean_column, split_xy
+from sklearn2.utils import split_xy
 
 _here = path.abspath(path.dirname(__file__))
 
-def _extract(bunch):
+def _extract(bunch, return_xy):
     x = pd.DataFrame(data=bunch['data'], columns=bunch['feature_names'])
     y = pd.DataFrame(data=bunch['target'], columns=['target'])
     if 'target_names' in bunch.keys():
         y = y.apply(lambda z:bunch['target_names'][z])
-#    df = pd.concat([x, y], axis=1)
-    return x, np.ravel(y)
+    return x, np.ravel(y) if return_xy else pd.concat([x, y], axis=1)
 
 
-def get_iris():
-    return _extract(load_iris())
+def get_iris(return_xy=False):
+    return _extract(load_iris(), return_xy)
 
 
-def get_boston():
-    return _extract(load_boston())
+def get_boston(return_xy=False):
+    return _extract(load_boston(), return_xy)
 
 
-def get_titanic(split=True, fillna=True):  
+def get_titanic(return_xy=False):
     df = pd.read_csv(path.join(_here, 'titanic.csv'), encoding='latin1')
-#    df.columns = [clean_column(c) for c in df.columns]
     df.Fare = df.Fare.astype(float)
-    if fillna:
-        df.Age.fillna(df.Age.median(), inplace=True)
-        df.Cabin.fillna('-', inplace=True)
-        df.Embarked.fillna('-', inplace=True)
-    df = df.drop(['PassengerId', 'Name'], axis=1)
-    return split_xy(df, 'Survived') if split else df 
+    return split_xy(df, 'Survived') if return_xy else df
 
 
-def get_house_prices(split=True):  
+def get_titanic_clean(return_xy=False):
+    df = pd.read_csv(path.join(_here, 'titanic.csv'), encoding='latin1')
+    df.Fare = df.Fare.astype(float)
+    df.Age.fillna(df.Age.median(), inplace=True)
+    df.Cabin.fillna('-', inplace=True)
+    df.Embarked.fillna('-', inplace=True)
+    return split_xy(df, 'Survived') if return_xy else df
+
+
+def get_house_prices(return_xy=False):
     df = pd.read_csv(path.join(_here, 'house_prices.zip'), encoding='latin1')
-#    df.columns = [clean_column(c) for c in df.columns]
-    df = df.drop(['Id'], axis=1).dropna(1)
-    return split_xy(df, 'SalePrice') if split else df 
+    return split_xy(df, 'SalePrice') if return_xy else df

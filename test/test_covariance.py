@@ -9,13 +9,12 @@ Created on Mon Mar 27 16:10:21 2017
 import pandas as pd
 
 from sklearn2.utils import split_xy, print_summary
-from sklearn2.datasets import get_titanic
+from sklearn2.datasets import get_titanic_clean
 from sklearn2.covariance import compute_correls
 
 pd.options.display.width = 160
 
-df = get_titanic(split=False)
-#x, y = split_xy(df, 'survived')
+df = get_titanic_clean()['Fare Age Sex Embarked Pclass Survived'.split()]
 
 print_summary(df)
 

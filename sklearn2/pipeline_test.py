@@ -33,11 +33,9 @@ logging.getLogger().setLevel(level=logging.INFO)
 
 seed(0)
 
-def get_titanic_raw():
-    return get_titanic(True, False)
 
 
-x, y = get_titanic_raw()
+x, y = get_titanic(True)
 #x, y = get_iris()
 
 print_summary(x)
