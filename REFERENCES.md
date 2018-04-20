@@ -1,3 +1,5 @@
+https://github.com/pierre-chaville/automlk
+
 https://medium.com/airbnb-engineering/listing-embeddings-for-similar-listing-recommendations-and-real-time-personalization-in-search-601172f7603e
 
 https://github.com/keon/awesome-nlp
