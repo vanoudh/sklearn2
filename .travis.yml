@@ -2,15 +2,14 @@ sudo: required
 language: python
 matrix:
     include:
-        - python: 3.5
-          env: LATEST="false" COVERAGE="false" NUMPY_VERSION="1.11.2" SCIPY_VERSION="0.18.1" SKLEARN_VERSION="0.18" PANDAS_VERSION="0.20.3"
+        - python: 3.
+          env: NUMPY_VERSION="1.11.2" SCIPY_VERSION="0.18.1" SKLEARN_VERSION="0.18" PANDAS_VERSION="0.20.3"
 install:
     - sudo apt-get update
     - source ci/travis_install.sh
 script:
     - bash ci/travis_test.sh
-after_success:
-    - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
+
 notifications:
     email:
       recipients:
