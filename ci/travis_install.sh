@@ -14,7 +14,7 @@ conda info -a
 #conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
 #source activate test-environment
 
-conda install scikit-learn matplotlib pandas nose
+conda install scikit-learn matplotlib pandas nose pydot category_encoders
 pip install "."
 
 
