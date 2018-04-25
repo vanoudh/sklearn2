@@ -1,0 +1,19 @@
+sudo: required
+language: python
+matrix:
+    include:
+        - python: 3.6
+          env: LATEST="true" COVERAGE="true" NOTEBOOKS="true"
+install:
+    - sudo apt-get update
+    - source ci/.travis_install.sh
+script:
+    - bash ci/.travis_test.sh
+after_success:
+    - if [[ "$COVERAGE" == "true" ]]; then coveralls || echo "failed"; fi
+notifications:
+    email:
+      recipients:
+          - marc.vanoudheusden@gmail.com
+    on_success: always
+    on_failure: always
