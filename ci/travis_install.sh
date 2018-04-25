@@ -14,9 +14,10 @@ conda info -a
 #conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
 #source activate test-environment
 
-conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION
+conda install numpy scipy
 conda install pandas
 conda install matplotlib
+conda install scikit-learn
 pip install "."
 
 
