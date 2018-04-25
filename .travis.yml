@@ -8,7 +8,7 @@ install:
     - sudo apt-get update
     - source ci/travis_install.sh
 script:
-    - bash ci/travis_test.sh
+    - source ci/travis_test.sh
 
 notifications:
     email:
