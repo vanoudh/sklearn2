@@ -14,15 +14,9 @@ conda info -a
 #conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
 #source activate test-environment
 
-conda install numpy scipy
 conda install pandas
-conda install matplotlib
-conda install scikit-learn
 pip install "."
 
 
 python --version
 python -c "import pandas; print('pandas %s' % pandas.__version__)"
-python -c "import numpy; print('numpy %s' % numpy.__version__)"
-python -c "import scipy; print('scipy %s' % scipy.__version__)"
-python -c "import sklearn; print('sklearn %s' % sklearn.__version__)"

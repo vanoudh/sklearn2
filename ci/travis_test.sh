@@ -2,4 +2,5 @@
 
 set -e
 
-nosetests -s -v
+python --version
+python -c "import pandas; print('pandas %s' % pandas.__version__)"
