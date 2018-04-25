@@ -2,8 +2,8 @@ sudo: required
 language: python
 matrix:
     include:
-        - python: 3.6
-          env: LATEST="true" COVERAGE="true" NOTEBOOKS="true"
+        - python: 3.5
+          env: LATEST="false" COVERAGE="false" NUMPY_VERSION="1.11.2" SCIPY_VERSION="0.18.1" SKLEARN_VERSION="0.18" PANDAS_VERSION="0.19.1"
 install:
     - sudo apt-get update
     - source ci/travis_install.sh
