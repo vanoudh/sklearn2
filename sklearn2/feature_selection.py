@@ -5,6 +5,9 @@ Created on Tue Apr 19 19:09:57 2016
 @author: mvanoudh
 """
 
+import matplotlib
+matplotlib.use('agg')
+
 import logging
 import numpy as np
 import pandas as pd

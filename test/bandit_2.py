@@ -4,6 +4,9 @@ Created on Tue Oct 24 12:36:21 2017
 @author: mvanoudh
 """
 
+import matplotlib
+matplotlib.use('agg')
+
 import matplotlib.pyplot as plt
 import numpy as np
 np.random.seed(0)
