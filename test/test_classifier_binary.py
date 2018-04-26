@@ -5,7 +5,7 @@ Created on Wed Mar 15 10:34:26 2017
 @author: mvanoudh
 """
 
-import matplotlib.pyplot as plt  #analysis:ignore
+#import matplotlib.pyplot as plt  #analysis:ignore
 import numpy as np
 import pandas as pd
 from numpy import random

@@ -15,9 +15,7 @@ conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
 source activate test-environment
 
 conda install numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION pandas=$PANDAS_VERSION scikit-learn=$SKLEARN_VERSION
-pip install ".[testing]"
-pip install coverage coveralls codecov
-
+pip install "."
 
 python --version
 python -c "import pandas; print('pandas %s' % pandas.__version__)"
