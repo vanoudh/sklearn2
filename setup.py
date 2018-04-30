@@ -18,8 +18,11 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 # Get requirements from file
-with open(path.join(here, 'requirements_pip.txt'), encoding='utf-8') as f:
+with open(path.join(here, 'requirements_conda.txt'), encoding='utf-8') as f:
     install_requires = f.read().splitlines()
+
+with open(path.join(here, 'requirements_pip.txt'), encoding='utf-8') as f:
+    install_requires += f.read().splitlines()
 
 setup(
         name='sklearn2',

@@ -1,20 +1,31 @@
 # sklearn2
 
-Sklearn2 is a small extension of sklearn. It is inspired by sklearn in order to be mergeable with sklearn eventually.
+Sklearn2 is a small extension of scikit-learn. 
+It is inspired by scikit-learn in order to be mergeable with it eventually.
 
 It is in development phase : it will change radically, often and without notice.
 
 ## Requirements
 
-	Anaconda Python
+	See requirements_conda.txt and requirements_pip.txt
 
-	>pip install pydot
-	>pip install category_encoders
+## Installation with conda
 
-## Installation
+	$git clone https://github.com/vanoudh/sklearn2.git
+	$cd sklearn2
+	$conda install --file requirements_conda.txt
+    $pip install .
 
-    >pip install sklearn2
-   
+## Installation with pip
+
+	$git clone https://github.com/vanoudh/sklearn2.git
+	$cd sklearn2
+    $pip install .
+ 
+## Test
+
+	$pytest -v
+
 ## Usage
 
 TODO

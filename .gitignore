@@ -3,3 +3,4 @@
 *.png
 .DS_Store
 .pytest_cache/*
+nosklearn2.egg-info/*
