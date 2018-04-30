@@ -14,8 +14,8 @@ conda info -a
 #conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
 #source activate test-environment
 
-conda install scikit-learn matplotlib pandas nose pydot
-pip install category_encoders
+conda install --yes --file requirements.txt
+pip install -r requirements.txt 
 pip install "."
 
 python --version
