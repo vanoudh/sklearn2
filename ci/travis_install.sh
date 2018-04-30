@@ -15,7 +15,7 @@ conda info -a
 # source activate test-environment
 
 conda install --yes --file requirements_conda.txt
-pip install -r requirements_pip.txt 
+# pip install -r requirements_pip.txt 
 pip install "."
 
 python --version
