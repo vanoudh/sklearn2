@@ -21,15 +21,15 @@ setup(
         name='sklearn2',
         # https://packaging.python.org/en/latest/single_source_version.html
         version='0.0.10',
-        description='sklearn extension',
+        description='small scikit-learn extension',
         long_description=long_description,
 
         # The project's main homepage.
-        url='https://sgithub.fr.world.socgen/GBIS-DataScience/sklearn2',
+        url='https://github.com/vanoudh/sklearn2',
 
         # Author details
         author='Marc van Oudheusden',
-        author_email='marc.van-oudheusden@sgcib.com',
+        author_email='marc.vanoudheusden@gmail.com',
 
         # Choose your license
         license='MIT',
@@ -74,7 +74,7 @@ setup(
         # your project is installed. For an analysis of "install_requires" vs pip's
         # requirements files see:
         # https://packaging.python.org/en/latest/requirements.html
-        install_requires=[],
+        install_requires=['category_encoders'],
 
         # List additional groups of dependencies here (e.g. development
         # dependencies). You can install these using the following syntax,
