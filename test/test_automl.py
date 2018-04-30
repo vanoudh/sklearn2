@@ -28,9 +28,10 @@ def print_sm(sm):
         print('  ', s[1])
 
 
-for data_func in [get_boston]:
-    print('dataset:', str(data_func).split()[1])
-    x, y = data_func(True)    
-    m = get_best_model(x, y, None, None, 1) 
-    print_sm(m)
+def test_run():
+    for data_func in [get_boston]:
+        print('dataset:', str(data_func).split()[1])
+        x, y = data_func(True)    
+        m = get_best_model(x, y, None, None, 1) 
+        print_sm(m)
     

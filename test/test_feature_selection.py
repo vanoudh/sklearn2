@@ -18,22 +18,23 @@ from sklearn2.datasets import get_titanic_clean
 logging.basicConfig(format='%(asctime)s - %(name)s - %(message)s')
 logging.getLogger().setLevel(level=logging.DEBUG)
 
-
 pd.options.display.width = 160
 
-x, y = get_titanic_clean(True)
-model = Pipeline([
-                  ("da", DateEncoder()), 
-                  ("du", SparseCatEncoder()), 
-                  ("rf", RfAutoSelector()), 
-                  ("lr", DummyClassifier())
-                  ])
-params = { 
-           'da__ascategory': True
-           }
 
-model.set_params(**params)
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.6, random_state=42)
+def test_run():
+    x, y = get_titanic_clean(True)
+    model = Pipeline([
+                    ("da", DateEncoder()), 
+                    ("du", SparseCatEncoder()), 
+                    ("rf", RfAutoSelector()), 
+                    ("lr", DummyClassifier())
+                    ])
+    params = { 
+            'da__ascategory': True
+            }
 
-model.fit(X_train, y_train)
-print(model.score(X_test, y_test))
+    model.set_params(**params)
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.6, random_state=42)
+
+    model.fit(X_train, y_train)
+    print(model.score(X_test, y_test))

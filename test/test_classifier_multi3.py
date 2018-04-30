@@ -30,12 +30,13 @@ rfc = RandomForestClassifier(random_state=0)
 dtc = DecisionTreeClassifier()
 logit = LogisticRegression()
 
-for m in [rfc, dtc, logit]:
-    print(model_name(m))
-    print(cross_val_score(m, x, y, scoring = "accuracy", cv = cv))
-    print(cross_val_score(m, x, y, scoring = accuracy_at_proba(1/3), cv = cv))
-    print(cross_val_score(m, x, y, scoring = coverage_at_proba(1/3), cv = cv))
-    print(cross_val_score(m, x, y, scoring = "avg_roc_auc_macro", cv = cv))
-    print(cross_val_score(m, x, y, scoring = "avg_roc_auc_micro", cv = cv))
+def test_run():
+    for m in [rfc, dtc, logit]:
+        print(model_name(m))
+        print(cross_val_score(m, x, y, scoring = "accuracy", cv = cv))
+        print(cross_val_score(m, x, y, scoring = accuracy_at_proba(1/3), cv = cv))
+        print(cross_val_score(m, x, y, scoring = coverage_at_proba(1/3), cv = cv))
+        print(cross_val_score(m, x, y, scoring = "avg_roc_auc_macro", cv = cv))
+        print(cross_val_score(m, x, y, scoring = "avg_roc_auc_micro", cv = cv))
     
     

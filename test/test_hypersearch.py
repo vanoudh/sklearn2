@@ -52,10 +52,11 @@ models = [
 
 cvs = ShuffleSplit(10)
 
-for m in models:
-    reg, n_iter, params = m
-    gs = RandomizedSearchCV(reg, param_distributions=params, cv=cvs.split(x), 
-                            verbose=1, n_iter=n_iter)
-    gs.fit(x, y)
-    print(model_name(reg), gs.best_score_)
+def test_run():
+    for m in models:
+        reg, n_iter, params = m
+        gs = RandomizedSearchCV(reg, param_distributions=params, cv=cvs.split(x), 
+                                verbose=1, n_iter=n_iter)
+        gs.fit(x, y)
+        print(model_name(reg), gs.best_score_)
  

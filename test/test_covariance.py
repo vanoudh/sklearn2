@@ -34,9 +34,10 @@ def test3():
 def test4():
     return compute_correls(df, model='forest')
 
-    
+"""     
 if __name__ == "__main__":
     res1 = test1()
     res2 = test2()
     res3 = test3()
     res4 = test4()
+ """

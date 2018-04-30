@@ -37,12 +37,14 @@ dtc = DecisionTreeClassifier(criterion='entropy', max_features=0.85,
                              random_state=0, max_depth=14)
 logit = LogisticRegression()
 
-for m in [rfc, dtc, logit]:
-    print(model_name(m))
-    m.fit(x_train, y_train)
-    print(m.classes_)
-    print('score in and out of sample', m.score(x_train, y_train), m.score(x_test, y_test))
-    y_proba = m.predict_proba(x_test)
-    print(roc_auc_score(y2_test, y_proba, None))
+
+def test_run():
+    for m in [rfc, dtc, logit]:
+        print(model_name(m))
+        m.fit(x_train, y_train)
+        print(m.classes_)
+        print('score in and out of sample', m.score(x_train, y_train), m.score(x_test, y_test))
+        y_proba = m.predict_proba(x_test)
+        print(roc_auc_score(y2_test, y_proba, None))
     
     

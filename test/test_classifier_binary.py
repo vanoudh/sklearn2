@@ -38,11 +38,13 @@ dtc = DecisionTreeClassifier(criterion='entropy', max_features=0.85,
                              min_samples_split=2,
                              random_state=0, max_depth=14)
 
-for m in [rfc, dtc]:
-    print(model_name(m))
-    m.fit(x_train, y_train)
-    print('score in and out of sample', m.score(x_train, y_train), m.score(x_test, y_test))
-    y_proba = m.predict_proba(x_test)[:, 1]
-    print(roc_auc_score(y_test, y_proba))
+
+def test_run():
+    for m in [rfc, dtc]:
+        print(model_name(m))
+        m.fit(x_train, y_train)
+        print('score in and out of sample', m.score(x_train, y_train), m.score(x_test, y_test))
+        y_proba = m.predict_proba(x_test)[:, 1]
+        print(roc_auc_score(y_test, y_proba))
     
     

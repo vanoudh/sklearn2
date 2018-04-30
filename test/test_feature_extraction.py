@@ -50,22 +50,23 @@ def test_dummy_encoder():
     _test_dummy(x.values)
       
 
-x, y = get_titanic(True)
+def test_pipeline():
+    x, y = get_titanic(True)
 
-model = Pipeline([
-                  ("da", DateEncoder()), 
-                  ("du", SparseCatEncoder()), 
-                  ("lr", DummyClassifier())
-                  ])
-params = { 
-           'da__ascategory': True
-           }
+    model = Pipeline([
+                    ("da", DateEncoder()), 
+                    ("du", SparseCatEncoder()), 
+                    ("lr", DummyClassifier())
+                    ])
+    params = { 
+            'da__ascategory': True
+            }
 
 
 
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.6, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.6, random_state=42)
 
-model.fit(X_train, y_train)
-print(model.score(X_test, y_test))
+    model.fit(X_train, y_train)
+    print(model.score(X_test, y_test))
 
 

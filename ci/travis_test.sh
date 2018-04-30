@@ -2,4 +2,4 @@
 
 set -e
 
-nosetests -s -v
+pytest -v
