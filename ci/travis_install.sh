@@ -11,10 +11,10 @@ conda config --set always_yes yes --set changeps1 no
 conda update -q conda
 conda info -a
 
-#conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
-#source activate test-environment
+# conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
+# source activate test-environment
 
-conda install --yes --file requirements.txt
+# conda install --yes --file requirements.txt
 pip install -r requirements.txt 
 pip install "."
 
