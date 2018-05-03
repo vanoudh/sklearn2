@@ -17,18 +17,14 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-# Get conda requirements from file
-with open(path.join(here, 'requirements_conda.txt'), encoding='utf-8') as f:
-    install_requires = f.read().splitlines()
-
 # Get pip requirements from file
-with open(path.join(here, 'requirements_pip.txt'), encoding='utf-8') as f:
-    install_requires += f.read().splitlines()
+with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
+    install_reqs = f.read().splitlines()
 
 setup(
         name='sklearn2',
         # https://packaging.python.org/en/latest/single_source_version.html
-        version='0.0.12',
+        version='0.0.13',
         description='small scikit-learn extension',
         long_description=long_description,
 
@@ -59,9 +55,6 @@ setup(
 
             # Specify the Python versions you support here. In particular, ensure
             # that you indicate whether you support Python 2, Python 3 or both.
-            'Programming Language :: Python :: 2.7',
-            'Programming Language :: Python :: 3.3',
-            'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6'
         ],
@@ -71,8 +64,9 @@ setup(
 
         # You can just specify the packages manually here if your project is
         # simple. Or you can use find_packages().
-        packages=find_packages(exclude=['test']),
-
+        # packages=find_packages(exclude=['test', 'test*']),
+        packages=['sklearn2'],
+        include_package_data=True,
         # Alternatively, if you want to distribute just a my_module.py, uncomment
         # this:
         #   py_modules=["my_module"],
@@ -81,7 +75,7 @@ setup(
         # your project is installed. For an analysis of "install_requires" vs pip's
         # requirements files see:
         # https://packaging.python.org/en/latest/requirements.html
-        install_requires=install_requires,
+        install_requires=install_reqs,
 
         # List additional groups of dependencies here (e.g. development
         # dependencies). You can install these using the following syntax,

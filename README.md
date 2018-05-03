@@ -5,25 +5,32 @@ It is inspired by scikit-learn in order to be mergeable with it eventually.
 
 It is in development phase : it will change radically, often and without notice.
 
-## Requirements
+## Conda requirements
 
-	See requirements_conda.txt and requirements_pip.txt
+	You have to install them manually :
 
-## Installation with conda
+	$conda install pandas scikit-learn matplotlib statsmodels patsy pydot
+
+## Pip requirements
+
+	You don't have to do anything, they are installed with the package.
+
+	See requirements.txt for the list.
+
+## Installation from source
 
 	$git clone https://github.com/vanoudh/sklearn2.git
 	$cd sklearn2
-	$conda install --file requirements_conda.txt
     $pip install .
 
-## Installation with pip
+## Installation from pypi
 
-	$git clone https://github.com/vanoudh/sklearn2.git
-	$cd sklearn2
-    $pip install .
+    $pip install sklearn2
  
 ## Test
 
+	$conda install pytest
+	$cd sklearn2
 	$pytest -v
 
 ## Usage
