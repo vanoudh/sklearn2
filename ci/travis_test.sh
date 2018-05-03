@@ -2,5 +2,4 @@
 
 set -e
 
-conda install pytest
 pytest -v
