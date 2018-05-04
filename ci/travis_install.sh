@@ -15,6 +15,7 @@ conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
 source activate test-environment
 
 conda install --yes cython pandas scikit-learn matplotlib statsmodels patsy pydot
+conda install pytest
 pip install "."
 
 python --version
