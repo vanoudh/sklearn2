@@ -1,0 +1,51 @@
+Ubuntu 18.04
+Create windows install key
+Create ubuntu install key
+Plug windows key
+Reboot
+Press F2 ( bios setup )
+Switch from RAID to AHCI
+Set secure boot OFF
+Save and quit
+Press F12 ( boot options )
+	Select usb key
+Reinstall windows
+Plug ubuntu key
+Reboot
+Press F12
+	Select usb key
+Install Ubuntu alongside Windows
+
+
+Download this file manually ( needs login )
+
+	https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v7.0.5/prod/9.0_20171129/cudnn-9.0-linux-x64-v7
+
+Run:
+
+wget https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda-repo-ubuntu1704-9-0-local_9.0.176-1_amd64-deb
+wget https://developer.nvidia.com/compute/cuda/9.0/Prod/patches/1/cuda-repo-ubuntu1704-9-0-local-cublas-performance-update_1.0-1_amd64-deb
+wget https://developer.nvidia.com/compute/cuda/9.0/Prod/patches/2/cuda-repo-ubuntu1704-9-0-local-cublas-performance-update-2_1.0-1_amd64-deb
+	
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt update
+sudo apt install nvidia-390
+reboot
+nvidia-smi
+
+sudo dpkg -i cuda-repo-ubuntu1704-9-0-local_9.0.176-1_amd64.deb 
+sudo apt-key add /var/cuda-repo-9-0-local/7fa2af80.pub 
+sudo apt-get update
+sudo apt-get install cuda
+sudo dpkg -i cuda-repo-ubuntu1704-9-0-local-cublas-performance-update_1.0-1_amd64-deb 
+sudo apt-get install
+sudo dpkg -i cuda-repo-ubuntu1704-9-0-local-cublas-performance-update-2_1.0-1_amd64-deb
+sudo apt-get install
+
+echo export PATH=/usr/local/cuda-9.0/bin${PATH:+:$PATH} >> ~/.bashrc
+echo export LD_LIBRARY_PATH=/usr/local/cuda-9.0/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} >> ~/.bashrc
+
+tar -xzvf cudnn-9.0-linux-x64-v7.tgz
+sudo cp cuda/include/cudnn.h /usr/local/cuda/include
+sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
